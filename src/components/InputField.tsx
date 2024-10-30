@@ -63,12 +63,20 @@ export const InputField: React.FC<InputFieldProps> = ({
     <div className="flex items-center justify-between gap-2 sm:gap-4">
       {label && (
         <div className="flex items-center gap-1 flex-shrink-0">
-          <label htmlFor={id} className="text-xs sm:text-sm font-medium text-custom-text dark:text-custom-dark-text whitespace-nowrap">
+          <label 
+            htmlFor={id} 
+            className="text-xs sm:text-sm font-medium text-custom-text dark:text-custom-dark-text whitespace-nowrap"
+          >
             {label}
           </label>
           {tooltip && (
             <Tooltip text={tooltip}>
-              <Info className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 cursor-help" aria-hidden="true" />
+              <span className="inline-flex">
+                <Info 
+                  className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 cursor-help" 
+                  aria-hidden="true"
+                />
+              </span>
             </Tooltip>
           )}
         </div>
@@ -83,10 +91,16 @@ export const InputField: React.FC<InputFieldProps> = ({
           readOnly={readOnly}
           className={inputClasses}
           aria-label={label}
+          name={label.toLowerCase().replace(/\s+/g, '-')}
         />
         {symbol && (
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3 pointer-events-none">
-            <span className="text-sm sm:text-base text-custom-text dark:text-custom-dark-text" aria-hidden="true">{symbol}</span>
+            <span 
+              className="text-sm sm:text-base text-custom-text dark:text-custom-dark-text" 
+              aria-hidden="true"
+            >
+              {symbol}
+            </span>
           </div>
         )}
       </div>
