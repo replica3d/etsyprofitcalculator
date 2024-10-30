@@ -100,16 +100,17 @@ const Calculator: React.FC = () => {
       <div className="flex justify-center">
         <button
           onClick={handleShare}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200 w-full sm:w-auto justify-center"
+          aria-label="Share calculator settings"
         >
           {copied ? (
             <>
-              <Check className="w-4 h-4" />
+              <Check className="w-4 h-4" aria-hidden="true" />
               Copied!
             </>
           ) : (
             <>
-              <Share className="w-4 h-4" />
+              <Share className="w-4 h-4" aria-hidden="true" />
               Share Calculator Settings
             </>
           )}

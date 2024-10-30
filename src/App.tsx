@@ -19,13 +19,11 @@ function App() {
     const settings: Record<string, number> = {};
     const inputs: Record<string, string | number> = {};
 
-    // Parse parameters
     params.forEach((value, key) => {
       const numValue = Number(value);
       if (key.startsWith('s_')) {
         settings[key.slice(2)] = numValue;
       } else if (key.startsWith('i_')) {
-        // Convert to number if it's a numeric field, keep as string for text fields
         inputs[key.slice(2)] = key.slice(2) === 'item' ? value : numValue;
       }
     });
@@ -56,7 +54,7 @@ function App() {
         <div className="max-w-4xl mx-auto">
           <div className="flex justify-between items-center mb-6 sm:mb-8">
             <div className="inline-flex items-center gap-2">
-              <CalculatorIcon className="w-8 h-8 text-orange-500" />
+              <CalculatorIcon className="w-8 h-8 text-orange-500" aria-hidden="true" />
               <div>
                 <h1 className="text-3xl font-bold text-custom-text dark:text-custom-dark-text">
                   Etsy Profit Calculator
@@ -69,11 +67,12 @@ function App() {
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-full hover:bg-gray-200 dark:hover:bg-custom-dark-surface transition-colors"
+              aria-label={darkMode ? "Switch to light mode" : "Switch to dark mode"}
             >
               {darkMode ? (
-                <Sun className="w-5 h-5 text-custom-dark-text" />
+                <Sun className="w-5 h-5 text-custom-dark-text" aria-hidden="true" />
               ) : (
-                <Moon className="w-5 h-5 text-custom-text" />
+                <Moon className="w-5 h-5 text-custom-text" aria-hidden="true" />
               )}
             </button>
           </div>

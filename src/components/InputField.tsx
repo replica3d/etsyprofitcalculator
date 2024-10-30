@@ -23,6 +23,8 @@ export const InputField: React.FC<InputFieldProps> = ({
   placeholder,
   tooltip
 }) => {
+  const id = React.useId();
+  
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!onChange) return;
     
@@ -52,8 +54,8 @@ export const InputField: React.FC<InputFieldProps> = ({
     'dark:focus:border-blue-400',
     'bg-white dark:bg-[rgb(45,45,45)]',
     'text-custom-text dark:text-custom-dark-text',
-    'transition-colors duration-200',
     'text-sm sm:text-base',
+    'transition-colors duration-200',
     readOnly ? 'bg-gray-100 dark:bg-custom-dark-bg' : '',
   ].filter(Boolean).join(' ');
 
@@ -61,28 +63,30 @@ export const InputField: React.FC<InputFieldProps> = ({
     <div className="flex items-center justify-between gap-2 sm:gap-4">
       {label && (
         <div className="flex items-center gap-1 flex-shrink-0">
-          <label className="text-xs sm:text-sm font-medium text-custom-text dark:text-custom-dark-text whitespace-nowrap">
+          <label htmlFor={id} className="text-xs sm:text-sm font-medium text-custom-text dark:text-custom-dark-text whitespace-nowrap">
             {label}
           </label>
           {tooltip && (
             <Tooltip text={tooltip}>
-              <Info className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 cursor-help" />
+              <Info className="w-3 h-3 sm:w-4 sm:h-4 text-gray-400 hover:text-gray-500 dark:text-gray-500 dark:hover:text-gray-400 cursor-help" aria-hidden="true" />
             </Tooltip>
           )}
         </div>
       )}
       <div className="relative flex-1 max-w-[120px] sm:max-w-[200px] ml-auto">
         <input
+          id={id}
           type={type}
           value={value || ''}
           onChange={handleChange}
           placeholder={placeholder ?? (type === 'number' ? '0' : '')}
           readOnly={readOnly}
           className={inputClasses}
+          aria-label={label}
         />
         {symbol && (
           <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:pr-3 pointer-events-none">
-            <span className="text-sm sm:text-base text-custom-text dark:text-custom-dark-text">{symbol}</span>
+            <span className="text-sm sm:text-base text-custom-text dark:text-custom-dark-text" aria-hidden="true">{symbol}</span>
           </div>
         )}
       </div>
