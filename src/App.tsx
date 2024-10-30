@@ -52,9 +52,9 @@ function App() {
 
   return (
     <CalculatorProvider initialState={initialState}>
-      <div className="min-h-screen bg-gray-50 dark:bg-custom-dark-bg py-12 px-4 transition-colors duration-200">
+      <div className="min-h-screen bg-gray-50 dark:bg-custom-dark-bg py-6 sm:py-12 px-4 transition-colors duration-200">
         <div className="max-w-4xl mx-auto">
-          <div className="flex justify-between items-center mb-8">
+          <div className="flex justify-between items-center mb-6 sm:mb-8">
             <div className="inline-flex items-center gap-2">
               <CalculatorIcon className="w-8 h-8 text-orange-500" />
               <div>
