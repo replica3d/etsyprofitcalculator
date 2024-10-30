@@ -17,26 +17,23 @@ const Calculator: React.FC = () => {
     ((calculations.baseCost + settings.listingFee + settings.paymentFeeFixed) / 
     (1 - totalFeeRate)) - inputs.shippingPrice : 0;
 
-  const containerClasses = "bg-white dark:bg-custom-dark-surface rounded-xl shadow-md p-6 border-t-4 transition-colors duration-200";
+  const containerClasses = "bg-white dark:bg-custom-dark-surface rounded-xl shadow-md p-4 sm:p-6 border-t-4 transition-colors duration-200";
 
   const handleShare = () => {
     const params = new URLSearchParams();
     
-    // Add inputs
     Object.entries(inputs).forEach(([key, value]) => {
-      if (value !== 0 && value !== '') { // Only include non-zero and non-empty values
+      if (value !== 0 && value !== '') {
         params.append(`i_${key}`, value.toString());
       }
     });
     
-    // Add settings that differ from defaults
     Object.entries(settings).forEach(([key, value]) => {
       if (value !== DEFAULT_SETTINGS[key]) {
         params.append(`s_${key}`, value.toString());
       }
     });
     
-    // Create shareable URL without replacing current URL
     const url = `${window.location.origin}${window.location.pathname}?${params.toString()}`;
     navigator.clipboard.writeText(url).then(() => {
       setCopied(true);
@@ -45,8 +42,8 @@ const Calculator: React.FC = () => {
   };
 
   return (
-    <div className="space-y-6">
-      <div className="grid gap-6 md:grid-cols-2">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
         <div className={`${containerClasses} border-blue-500`}>
           <RevenueSection />
         </div>
@@ -55,37 +52,37 @@ const Calculator: React.FC = () => {
         </div>
       </div>
       
-      <div className="grid gap-6 md:grid-cols-2">
+      <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
         <div className={`${containerClasses} border-orange-500`}>
           <EtsyFeesSection />
         </div>
         <div className={`${containerClasses} border-indigo-500`}>
-          <h3 className="text-xl font-semibold mb-4 text-custom-text dark:text-custom-dark-text">Summary</h3>
+          <h3 className="text-lg sm:text-xl font-semibold mb-4 text-custom-text dark:text-custom-dark-text">Summary</h3>
           <div className="space-y-3">
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center text-sm sm:text-base">
               <span className="text-custom-text dark:text-custom-dark-text">Total Revenue</span>
               <span className="font-medium text-custom-text dark:text-custom-dark-text">{calculations.totalRevenue.toFixed(2)}€</span>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center text-sm sm:text-base">
               <span className="text-custom-text dark:text-custom-dark-text">Total Fees</span>
               <span className="font-medium text-custom-text dark:text-custom-dark-text">{calculations.totalFees.toFixed(2)}€</span>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center text-sm sm:text-base">
               <span className="text-custom-text dark:text-custom-dark-text">Total Cost (without VAT)</span>
               <span className="font-medium text-custom-text dark:text-custom-dark-text">
                 {calculations.baseCost.toFixed(2)}€
               </span>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center text-sm sm:text-base">
               <span className="text-custom-text dark:text-custom-dark-text">Fee Ratio</span>
               <span className="font-medium text-custom-text dark:text-custom-dark-text">{feeRatio.toFixed(1)}%</span>
             </div>
-            <div className="flex justify-between items-center">
+            <div className="flex justify-between items-center text-sm sm:text-base">
               <span className="text-custom-text dark:text-custom-dark-text">VAT</span>
               <span className="font-medium text-custom-text dark:text-custom-dark-text">{calculations.tax.toFixed(2)}€</span>
             </div>
             <div className="pt-3 border-t dark:border-custom-dark-border">
-              <div className="flex justify-between items-center">
+              <div className="flex justify-between items-center text-sm sm:text-base">
                 <span className="text-custom-text dark:text-custom-dark-text font-medium">Breakeven Price</span>
                 <span className="font-medium text-custom-text dark:text-custom-dark-text">{breakeven.toFixed(2)}€</span>
               </div>
@@ -103,7 +100,7 @@ const Calculator: React.FC = () => {
       <div className="flex justify-center">
         <button
           onClick={handleShare}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200"
+          className="inline-flex items-center gap-2 px-3 py-1.5 sm:px-4 sm:py-2 text-sm sm:text-base bg-blue-600 dark:bg-blue-500 text-white rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 transition-colors duration-200"
         >
           {copied ? (
             <>
@@ -122,7 +119,6 @@ const Calculator: React.FC = () => {
   );
 };
 
-// Default settings for comparison when sharing
 const DEFAULT_SETTINGS = {
   listingFee: 0.19,
   transactionFeeRate: 0.065,
