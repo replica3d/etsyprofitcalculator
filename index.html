@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Etsy Profit Calculator - Calculate Fees, Costs & Profits</title>
+    <meta name="description" content="Maximize your Etsy shop earnings! Use our Etsy Profit Calculator to easily calculate fees, costs, and profits for better business insights." />
+    <meta name="keywords" content="etsy calculator, etsy fees, profit calculator, etsy profit, etsy business, etsy seller tools" />
+    <meta property="og:title" content="Etsy Profit Calculator - Calculate Fees, Costs & Profits" />
+    <meta property="og:description" content="Maximize your Etsy shop earnings! Use our Etsy Profit Calculator to easily calculate fees, costs, and profits for better business insights." />
+    <meta property="og:type" content="website" />
+    <script>
+      // On page load or when changing themes, best to add inline in `head` to avoid FOUC
+      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+        document.documentElement.classList.add('dark')
+      } else {
+        document.documentElement.classList.remove('dark')
+      }
+    </script>
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Etsy Profit Calculator",
+        "description": "A calculator tool for Etsy sellers to calculate fees, costs, and profits",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "Any",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "EUR"
+        },
+        "featureList": [
+          "Calculate Etsy fees",
+          "Calculate shipping costs",
+          "Calculate VAT",
+          "Calculate profit margins",
+          "Calculate breakeven price"
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
