@@ -28,13 +28,18 @@ export const InputField: React.FC<InputFieldProps> = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!onChange) return;
     
-    const val = type === 'number' 
-      ? e.target.value === '' 
-        ? 0 
-        : parseFloat(e.target.value) || 0 
-      : e.target.value;
-    
-    onChange(val);
+    if (type === 'number') {
+      const inputValue = e.target.value;
+      // Handle empty string, "0." and regular numbers
+      if (inputValue === '' || inputValue === '0.') {
+        onChange(inputValue);
+      } else {
+        const numValue = parseFloat(inputValue);
+        onChange(isNaN(numValue) ? 0 : numValue);
+      }
+    } else {
+      onChange(e.target.value);
+    }
   };
 
   const inputClasses = [
@@ -85,9 +90,9 @@ export const InputField: React.FC<InputFieldProps> = ({
         <input
           id={id}
           type={type}
-          value={value || ''}
+          value={value}
           onChange={handleChange}
-          placeholder={placeholder ?? (type === 'number' ? '0' : '')}
+          placeholder={placeholder}
           readOnly={readOnly}
           className={inputClasses}
           aria-label={label}

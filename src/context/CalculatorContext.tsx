@@ -2,12 +2,12 @@ import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface CalculatorInputs {
   item: string;
-  itemPrice: number;
-  shippingPrice: number;
-  discount: number;
-  itemCost: number;
-  packingCost: number;
-  shippingCost: number;
+  itemPrice: number | string;
+  shippingPrice: number | string;
+  discount: number | string;
+  itemCost: number | string;
+  packingCost: number | string;
+  shippingCost: number | string;
 }
 
 interface CalculatorSettings {
@@ -60,12 +60,12 @@ const DEFAULT_SETTINGS: CalculatorSettings = {
 
 const DEFAULT_INPUTS: CalculatorInputs = {
   item: '',
-  itemPrice: 0,
-  shippingPrice: 0,
-  discount: 0,
-  itemCost: 0,
-  packingCost: 0,
-  shippingCost: 0,
+  itemPrice: '',
+  shippingPrice: '',
+  discount: '',
+  itemCost: '',
+  packingCost: '',
+  shippingCost: '',
 };
 
 const DEFAULT_CALCULATIONS: CalculatorCalculations = {
@@ -100,6 +100,13 @@ interface CalculatorProviderProps {
   };
 }
 
+const parseNumberInput = (value: string | number): number => {
+  if (typeof value === 'number') return value;
+  if (value === '' || value === '0.') return 0;
+  const parsed = parseFloat(value);
+  return isNaN(parsed) ? 0 : parsed;
+};
+
 export const CalculatorProvider: React.FC<CalculatorProviderProps> = ({ children, initialState }) => {
   const [inputs, setInputs] = useState<CalculatorInputs>({
     ...DEFAULT_INPUTS,
@@ -120,8 +127,15 @@ export const CalculatorProvider: React.FC<CalculatorProviderProps> = ({ children
   };
 
   useEffect(() => {
-    const totalRevenue = (inputs.itemPrice - inputs.discount) + inputs.shippingPrice;
-    const baseCost = inputs.itemCost + inputs.packingCost + inputs.shippingCost;
+    const itemPrice = parseNumberInput(inputs.itemPrice);
+    const shippingPrice = parseNumberInput(inputs.shippingPrice);
+    const discount = parseNumberInput(inputs.discount);
+    const itemCost = parseNumberInput(inputs.itemCost);
+    const packingCost = parseNumberInput(inputs.packingCost);
+    const shippingCost = parseNumberInput(inputs.shippingCost);
+
+    const totalRevenue = (itemPrice - discount) + shippingPrice;
+    const baseCost = itemCost + packingCost + shippingCost;
     
     const transactionFee = totalRevenue * settings.transactionFeeRate;
     const paymentFee = totalRevenue * settings.paymentFeeRate + settings.paymentFeeFixed;
@@ -144,10 +158,9 @@ export const CalculatorProvider: React.FC<CalculatorProviderProps> = ({ children
     const profitMarginOANONEU = totalRevenue ? (profitOANONEU / totalRevenue) * 100 : 0;
 
     // Breakeven calculation
-    // P = (IC + LF + PFF) / (1 - (TF + PPF))
     const totalFeeRate = settings.transactionFeeRate + settings.paymentFeeRate;
-    const breakeven = inputs.itemCost > 0 ? 
-      (inputs.itemCost + inputs.packingCost + settings.listingFee + settings.paymentFeeFixed) / 
+    const breakeven = itemCost > 0 ? 
+      (itemCost + packingCost + settings.listingFee + settings.paymentFeeFixed) / 
       (1 - totalFeeRate) : 0;
 
     setCalculations({
